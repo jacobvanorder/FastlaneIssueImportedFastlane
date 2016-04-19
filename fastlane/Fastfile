@@ -1,0 +1,23 @@
+platform :ios do
+
+  before_all do |lane, options|
+    #NOTE! This will do nothing if imported to another Fastfile.
+  end
+
+  after_all do |lane, options|
+    if lane == :test
+      puts "Imported Fastfile: Ran test from imported Fastfile"
+    elsif lane == :child_test
+      puts "Imported Fastfile: Ran child_test from imported Fastfile"
+    end
+  end
+
+  error do |lane, exception|
+    puts "Imported Fastfile: #{exception} on lane: #{lane}"
+  end
+
+  desc "Runs Scan from Imported Fastfile"
+  private_lane :child_test do |options|
+    scan
+  end
+end
